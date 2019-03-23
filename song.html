@@ -7,13 +7,149 @@
     <title>Song contest</title>
     <script type='text/javascript' src='midi.js'></script>
     <script>
+
+        let answer = '';
+        
+        let tasks = ['Сделай 10 отжиманий', 'Сделай 10 приседаний', 'Скажи что ты ценишь в каждом человеке, с которым ты сейчас играешь',
+            'Выпей глоток воды и произнеси скороговорку', 'Поцелуй Даниску', 'Пропусти следующий ход (нельзя отказаться)', 'Ты Кристина, поэтому каждый раз, когда говорят слово "Что", ты должен говорить "Я Кристина"',
+            'Другие игроки придумывают тебе задание', 'Другие игроки придумывают тебе задание', 'Придумай задание другому игроку', 'Придумай задание другому игроку',
+            'Спой что нибудь из Руки Вверх', 'Брось кубик, сколько выпало, столько раз крикни слово "Жопа"', 'Брось кубик, шлепни столько раз игрока на твой выбор по попе'
+            , 'Если ты Дамир, ничего не делай, если нет, погладь  Дамира по голове', 'Расскажи анекдот', 'Молчи, пока не настанет твой ход', 'Выбери игрока, следующий бросок за него делать будешь ты'
+            , 'Другие игроки придумывают тебе задание', 'Придумай задание другому игроку', 'Придумай задание другому игроку', 'Другие игроки придумывают тебе задание'
+            , 'Придумай задание другому игроку', 'Придумай задание другому игроку', 'Другие игроки придумывают тебе задание', 'Другие игроки придумывают тебе задание'
+            , 'Если тебя зовут Дима, то ничего не делай, если нет, можешь ущипнуть другого игрока по выбору'];
+
+        console.log('TASKS', tasks.length);
+        let russian = ['А-СТУДИО - УЛЕТАЮ', 'Зеленоглазое такси', 'Тема из Бумера', 'Жуки - Батарейка', 'Звери - Районы Кварталы',
+            'ЗЕМЛЯНЕ - ТРАВА У ДОМА', 'КИНО - ЗВЕЗДА ПО ИМЕНИ CОЛНЦЕ', 'Кино - Кукушка', 'КОРОЛЬ И ШУТ - НЕКРОМАНТ', 'КОРОЛЬ И ШУТ - ЕЛИ МЯСО МУЖИКИ',
+            'КОРОЛЬ И ШУТ - КУКЛА КОЛДУНА', 'Музыка нас связала', 'Михаил круг - Владимирский централ', 'Руки Вверх - 18 мне уже', 'Алла Пугачева - Миллион Алых роз',
+            'Максим - Мой рай'];
+        let foreign = ['Тема из игры Mario', 'Тема из Игры Престолов', 'Тема из Утиних Историй', 'ABBA - Dancing Queen', 'ABBA - Mama Mia',
+            'ABBA - Waterloo', 'The Beatles - Let it be', 'The Beatles - Yesterday', 'EMINEM — LOVE THE WAY YOU LIE FEAT RIHANNA', 'Fleetwood Mac - The Chain',
+            'FOREIGNER — I WANT TO KNOW WHAT LOVE IS', 'GORILLAZ — 19 2000', 'GORILLAZ — FEEL GOOD INC', 'Тема Гравити Фолз', 'Imagine Dragons  - Radioactive', 'Lady Gaga - Alejandro', 'Lady Gaga - Bad Romance', 'Lady Gaga - Just Dance', 'Limp Bizkit - Rollin', 'Madonna - Like a Virgin',
+            'Maroon 5 - This Love', 'Тема из Скайрима'];
+        let questions = ['Чем можно поделиться только один раз?', 'Кто говорит на всех языках?', 'Висит на стене и в то же время падает. Что это?',
+            'Шесть ног, две головы, а хвост один. Что это такое?', 'Как далеко в глубь леса может забежать заяц?',
+            'Что было "завтра", а будем "вчера"?', 'Каких камней в море нет?', 'На какой вопрос никогда нельзя дать утвердительный ответ?',
+            'Между ног болтается, на "Х" называется.', 'Что можно приготовить, но съесть нельзя?', 'Специалист по разбору каракуль врачей?',
+        'Что это такое: синий, большой, с рогами и полностью набит зайцами?'];
+        let answers = ['Секретом', 'Эхо', 'Барометр', 'Всадник', 'До середины леса, так как далее он уже будет выбираться из глуби',
+            'Сегодняшний день', 'Сухих', 'На вопрос: "Ты спишь"', 'Хвост', 'Домашнее задание', 'Аптекарь', 'Троллейбус'];
+
+        console.log('questions', questions.length);
+        console.log('answers', answers.length);
+        function hideButtons() {
+            const red = document.getElementById('red');
+            const blue = document.getElementById('blue');
+            const green = document.getElementById('green');
+            const yellow = document.getElementById('yellow');
+
+            red.classList.add('hidden');
+            blue.classList.add('hidden');
+            green.classList.add('hidden');
+            yellow.classList.add('hidden');
+        }
+
+        function showButtons() {
+            const red = document.getElementById('red');
+            const blue = document.getElementById('blue');
+            const green = document.getElementById('green');
+            const yellow = document.getElementById('yellow');
+
+            red.classList.remove('hidden');
+            blue.classList.remove('hidden');
+            green.classList.remove('hidden');
+            yellow.classList.remove('hidden');
+        }
+
         function playRed() {
+            hideButtons();
+
+            const answerMessage = document.getElementById('answer');
+            const goBackButton = document.getElementById('goBackButton');
+
+            const task = Math.ceil(Math.random() * 27);
+
+            answer = tasks[task - 1];
+            
+            answerMessage.innerHTML = answer;
+
+            answerMessage.classList.remove('hidden');
+            goBackButton.classList.remove('hidden');
+        }
+
+        function playYellow() {
+            hideButtons();
+
+            const answerMessage = document.getElementById('answer');
+            const showAnswerButton = document.getElementById('showAnswerButton');
+            
+            const task = Math.ceil(Math.random() * 12);
+
+            answer = questions[task - 1];
+            
+            answerMessage.innerHTML = answer;
+
+            answer = answers[task - 1];
+
+            answerMessage.classList.remove('hidden');
+            showAnswerButton.classList.remove('hidden');
+        }
+
+        function playBlue() {
+            hideButtons();
+
+            const showAnswerButton = document.getElementById('showAnswerButton');
+            const song = Math.ceil(Math.random() * 22);
+
+            showAnswerButton.classList.remove('hidden');
+            answer = foreign[song - 1];
+
+            MIDIjs.play('songs/b' + song + '.mid');
+        }
+
+        function playGreen() {
+            hideButtons();
+
+            const showAnswerButton = document.getElementById('showAnswerButton');
+            const song = Math.ceil(Math.random() * 16);
+
+            showAnswerButton.classList.remove('hidden');
+            answer = russian[song - 1];
+
+            MIDIjs.play('songs/g' + song + '.mid');
+        }
+        
+        function showAnswer() {
+            const answerMessage = document.getElementById('answer');
+            const goBackButton = document.getElementById('goBackButton');
+            const showAnswerButton = document.getElementById('showAnswerButton');
+            
             MIDIjs.stop();
-            MIDIjs.play('songs/red' + Math.ceil(Math.random() * 1) + '.mid');
+            answerMessage.innerHTML = answer;
+
+            answerMessage.classList.remove('hidden');
+            goBackButton.classList.remove('hidden');
+            showAnswerButton.classList.add('hidden');
+        }
+
+        function goBack() {
+            showButtons();
+
+            const answerMessage = document.getElementById('answer');
+            const goBackButton = document.getElementById('goBackButton');
+
+            answerMessage.classList.add('hidden');
+            goBackButton.classList.add('hidden');
         }
     </script>
 
     <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       font-size: 16px;
@@ -34,17 +170,52 @@
       border: 0;
       border-radius: 4px;
       text-transform: uppercase;
+      margin-bottom: 16px;
+      background-color: #eeeeee;
+      color: #000;
     }
 
     .red {
       background-color: red;
+      color: #fff;
     }
 
+
+    .blue {
+      background-color: blue;
+      color: #fff;
+    }
+
+
+    .green {
+      background-color: green;
+      color: #fff;
+    }
+
+
+    .yellow {
+      background-color: yellow;
+    }
+
+    .answer {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .hidden {
+        display: none;
+    }
     </style>
 </head>
 <body>
     <div class="container">
-        <button class="red" onclick="playRed()">Play Red</button>
+        <button id="red" class="red" onclick="playRed()">Дай мне задание</button>
+        <button id="blue" class="blue" onclick="playBlue()">Иностранная музыка</button>
+        <button id="green" class="green" onclick="playGreen()">Русская музыка</button>
+        <button id="yellow" class="yellow" onclick="playYellow()">Задай вопрос</button>
+        <button id="showAnswerButton" class="hidden" onclick="showAnswer()">Показать ответ</button>
+        <button id="goBackButton" class="hidden" onclick="goBack()">Ок</button>
+        <div id="answer" class="answer hidden"></div>
     </div>
 </body>
 </html>
